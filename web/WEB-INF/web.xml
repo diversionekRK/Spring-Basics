@@ -29,18 +29,18 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
+            classpath:com/div/spring/web/config/security-config.xml
             classpath:com/div/spring/web/config/dao-context.xml
             classpath:com/div/spring/web/config/service-context.xml
         </param-value>
     </context-param>
 
     <filter>
-        <filter-name>TestFilter</filter-name>
-        <display-name>TestFilter</display-name>
-        <filter-class>com.div.spring.web.filters.TestFilter</filter-class>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>TestFilter</filter-name>
+        <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
