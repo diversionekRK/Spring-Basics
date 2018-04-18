@@ -1,12 +1,30 @@
 package com.div.spring.web.dao;
 
+import com.div.spring.web.validation.ValidEmail;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * Created by Div on 2018-04-18.
  */
 public class User {
+
+    @NotBlank
+    @Size(min = 8, max = 25)
+    @Pattern(regexp = "^\\w{8,}$")
     private String username;
+
+    @NotBlank
+    @Pattern(regexp = "^\\S+$")
+    @Size(min = 8, max = 15)
     private String password;
+
+    @ValidEmail
     private String email;
+
     private boolean enabled = false;
     private String authority;
 

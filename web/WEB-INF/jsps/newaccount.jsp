@@ -23,14 +23,14 @@
             <td>
                 <s-form:input class="control" path="username" name="username" type="text"/>
                 <br/>
-                <s-form:errors path="username" cssClass="error"></s-form:errors>
+                <div class="error"><s-form:errors path="username"></s-form:errors></div>
             </td>
         </tr>
         <tr>
             <td class="label">Email:</td>
             <td><s-form:input class="control" path="email" name="email" type="text"/>
                 <br/>
-                <s-form:errors path="email" cssClass="error"></s-form:errors>
+                <div class="error"><s-form:errors path="email"></s-form:errors></div>
             </td>
         </tr>
         <tr>
@@ -38,7 +38,7 @@
             <td>
                 <s-form:input class="control" path="password" name="password" type="text"/>
                 <br/>
-                <s-form:errors path="password" cssClass="error"></s-form:errors>
+                <div class="error"><s-form:errors path="password"></s-form:errors></div>
             </td>
         </tr>
         <tr>

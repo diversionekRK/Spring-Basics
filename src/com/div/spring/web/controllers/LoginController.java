@@ -43,7 +43,12 @@ public class LoginController {
     public String createAccount(@Valid User user, BindingResult result) {
 
         if(result.hasErrors()) {
-            return "createaccount";
+            return "newaccount";
+        }
+
+        if(usersService.exists(user.getUsername())) {
+            result.rejectValue("username", "DuplicateKey.user.username", "This username already exists");
+            return "newaccount";
         }
 
         user.setEnabled(true);
