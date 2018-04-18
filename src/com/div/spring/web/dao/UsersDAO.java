@@ -1,6 +1,7 @@
 package com.div.spring.web.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.stereotype.Component;
@@ -37,5 +38,9 @@ public class UsersDAO {
         MapSqlParameterSource param = new MapSqlParameterSource("username", username);
 
         return jdbc.queryForObject("select count(*) from users where username = :username", param, Integer.class) > 0;
+    }
+
+    public List<User> getAllUsers() {
+        return jdbc.query("select * from users natural join authorities", new BeanPropertyRowMapper(User.class) );
     }
 }

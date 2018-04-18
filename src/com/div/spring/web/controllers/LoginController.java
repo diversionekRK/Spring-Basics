@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by Div on 2018-04-18.
@@ -34,6 +35,16 @@ public class LoginController {
     @RequestMapping("/loggedout")
     public String showLoggedOut() {
         return "loggedout";
+    }
+
+    @RequestMapping("/admin")
+    public String showAdmin(Model model) {
+
+        List<User> users = usersService.getAllUsers();
+
+        model.addAttribute("users", users);
+
+        return "admin";
     }
 
     @RequestMapping("/newaccount")
