@@ -1,5 +1,5 @@
 .formtable {
-    width: 400px;
+    width: 600px;
     padding: 10px;
     border: 1px solid black;
 }
@@ -25,4 +25,9 @@ textarea {
 .offerstable {
     border: 1px solid darkblue;
     padding: 10px;
+}
+.valid {
+    font-size: small;
+    color: green;
+    margin-left: 10px;
 }
