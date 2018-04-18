@@ -15,7 +15,12 @@ import java.util.List;
 public class HomeController {
 
     @RequestMapping("/")
-    public String showHome(Model model) {
+    public String showHome() {
         return "home";
+    }
+
+    @RequestMapping("/admin")
+    public String showAdmin() {
+        return "admin";
     }
 }
