@@ -20,7 +20,7 @@ public class OffersService {
         this.offersDAO = offersDAO;
     }
 
-    public List<Offer> getCurrent() {
+    public List<Offer> getCurrentOffers() {
         return offersDAO.getOffers();
     }
 
