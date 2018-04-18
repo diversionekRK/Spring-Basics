@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s-form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>New account</title>
@@ -40,12 +41,12 @@
 
             if(password.length > 3 || confirmpass.length > 3) {
                 if(password == confirmpass) {
-                    $("#matchpass").text("Passwords match.");
+                    $("#matchpass").text("<fmt:message key='MatchedPasswords.user.password'></fmt:message>");
                     $("#matchpass").addClass("valid");
                     $("#matchpass").removeClass("error");
                 }
                 else {
-                    $("#matchpass").text("Passwords do not match.");
+                    $("#matchpass").text("<fmt:message key='UnmatchedPasswords.user.password'></fmt:message>");
                     $("#matchpass").addClass("error");
                     $("#matchpass").removeClass("valid");
                 }
