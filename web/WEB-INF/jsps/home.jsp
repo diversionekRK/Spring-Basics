@@ -17,7 +17,7 @@
 <p><a href="${pageContext.request.contextPath}/offers">Show current offers</a></p>
 <p><a href="${pageContext.request.contextPath}/createoffer">Add a new offer</a></p>
 
-<sec:authorize access="hasRole('admin')">
+<sec:authorize access="hasRole('ROLE_ADMIN')">
     <p><a href="<c:url value='/admin'/>">For admins</a></p>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">

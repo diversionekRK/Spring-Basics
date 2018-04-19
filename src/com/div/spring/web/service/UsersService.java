@@ -5,6 +5,7 @@ import com.div.spring.web.dao.OffersDAO;
 import com.div.spring.web.dao.User;
 import com.div.spring.web.dao.UsersDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class UsersService {
         return usersDao.exists(username);
     }
 
+    @Secured("hasRole('ROLE_ADMIN')")
     public List<User> getAllUsers() {
         return usersDao.getAllUsers();
     }
