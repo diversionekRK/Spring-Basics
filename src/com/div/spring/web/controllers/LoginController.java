@@ -37,6 +37,11 @@ public class LoginController {
         return "loggedout";
     }
 
+    @RequestMapping("/accessdenied")
+    public String showAccessDenied() {
+        return "accessdenied";
+    }
+
     @RequestMapping("/admin")
     public String showAdmin(Model model) {
 
@@ -72,7 +77,7 @@ public class LoginController {
         }
 
         user.setEnabled(true);
-        user.setAuthority("user");
+        user.setAuthority("ROLE_USER");
 
         usersService.create(user);
 

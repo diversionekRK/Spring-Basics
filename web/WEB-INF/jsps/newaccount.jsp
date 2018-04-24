@@ -79,7 +79,7 @@
         <tr>
             <td class="label">Password:</td>
             <td>
-                <s-form:input class="control" path="password" name="password" type="text" id="password"/>
+                <s-form:input class="control" path="password" name="password" type="password" id="password"/>
                 <br/>
                 <div class="error"><s-form:errors path="password"></s-form:errors></div>
             </td>
@@ -87,7 +87,7 @@
         <tr>
             <td class="label">Confirm Password:</td>
             <td>
-                <input class="control" name="confirmpass" type="text" id="confirmpass"/>
+                <input class="control" name="confirmpass" type="password" id="confirmpass"/>
                 <div id="matchpass"></div>
             </td>
         </tr>
