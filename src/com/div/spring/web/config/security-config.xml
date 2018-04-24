@@ -40,6 +40,7 @@
         <security:form-login login-page="/login" authentication-failure-url="/login?error=true"/>
         <security:logout logout-success-url="/loggedout"/>
         <security:access-denied-handler error-page="/accessdenied"/>
+        <security:remember-me key="springOffersRememberMeKey"/>
     </security:http>
 
     <security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled"/>
