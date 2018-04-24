@@ -40,9 +40,13 @@ public class LoginController {
     @RequestMapping("/admin")
     public String showAdmin(Model model) {
 
-        List<User> users = usersService.getAllUsers();
+        try {
+            List<User> users = usersService.getAllUsers();
 
-        model.addAttribute("users", users);
+            model.addAttribute("users", users);
+        } catch (Exception ex) {
+            System.out.println(ex.getClass());
+        }
 
         return "admin";
     }
