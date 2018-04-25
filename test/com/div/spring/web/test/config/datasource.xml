@@ -6,6 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.div.spring.web.test"></context:component-scan>
+    <context:annotation-config></context:annotation-config>
 
     <beans profile="dev">
         <context:property-placeholder location="com/div/spring/web/test/config/jdbc.properties"/>
@@ -16,7 +17,5 @@
             <property name="url" value="${jdbc.url}"></property>
         </bean>
     </beans>
-    <!--<context:annotation-config></context:annotation-config>-->
-
 
 </beans>

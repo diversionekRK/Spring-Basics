@@ -81,4 +81,24 @@ public class Offer {
     public void setText(String text) {
         this.text = text;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Offer offer = (Offer) o;
+
+        if (!name.equals(offer.name)) return false;
+        if (!email.equals(offer.email)) return false;
+        return text.equals(offer.text);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + text.hashCode();
+        return result;
+    }
 }

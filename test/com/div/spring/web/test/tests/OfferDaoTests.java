@@ -1,8 +1,7 @@
 package com.div.spring.web.test.tests;
 
 import com.div.spring.web.dao.Offer;
-import com.div.spring.web.dao.User;
-import com.div.spring.web.dao.UsersDAO;
+import com.div.spring.web.dao.OffersDAO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,12 +26,13 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration(locations = {
         "classpath:com/div/spring/web/config/dao-context.xml",
         "classpath:com/div/spring/web/config/security-config.xml",
-        "classpath:com/div/spring/web/test/config/datasource.xml"})
+        "classpath:com/div/spring/web/test/config/datasource.xml"
+})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserDaoTests {
+public class OfferDaoTests {
 
     @Autowired
-    private UsersDAO usersDAO;
+    private OffersDAO offersDAO;
 
     @Autowired
     private DataSource dataSource;
@@ -41,20 +41,22 @@ public class UserDaoTests {
     public void init() {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 
+        jdbc.execute("delete from offers");
         jdbc.execute("delete from users");
         jdbc.execute("delete from authorities");
     }
 
     @Test
-    public void testCreateUser() {
-        User user = new User("testuser", "testuser", "testuser@test.com", true, "ROLE_USER");
-        assertTrue("User creation should return true", usersDAO.create(user));
+    public void testOffers() {
 
-        List<User> users = usersDAO.getAllUsers();
-        assertEquals("Number of users should be 1", 1, users.size());
+        Offer offer = new Offer("SomeTestName", "someemail@test.eu", "This is test offer to check if app works");
 
-        assertTrue("User should exist", usersDAO.exists(user.getUsername()));
+        assertTrue("Offer creation should return true", offersDAO.create(offer));
 
-        assertEquals("Created user should be equal to retrieved user", user, users.get(0));
+        List<Offer> offers = offersDAO.getOffers();
+
+        assertEquals("There should be one offer in a database", 1, offers.size());
+
+        assertEquals("Created offer should be equal to retrieved offer", offer, offers.get(0));
     }
 }

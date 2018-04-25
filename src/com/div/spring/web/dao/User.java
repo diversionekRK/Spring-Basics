@@ -78,4 +78,26 @@ public class User {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (enabled != user.enabled) return false;
+        if (!username.equals(user.username)) return false;
+        if (!email.equals(user.email)) return false;
+        return authority.equals(user.authority);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + (enabled ? 1 : 0);
+        result = 31 * result + authority.hashCode();
+        return result;
+    }
 }
