@@ -15,6 +15,7 @@
 <body>
 
 <s-form:form action="${pageContext.request.contextPath}/docreate" method="post" commandName="offer">
+    <s-form:hidden path="id"></s-form:hidden>
     <table class="formtable">
         <tr>
             <td class="label">Your offer: </td>
@@ -26,7 +27,7 @@
         </tr>
         <tr>
             <td class="label"></td>
-            <td><input class="control" value="Create advert" type="submit"/></td>
+            <td><input class="control" value="Save advert" type="submit"/></td>
         </tr>
     </table>
 </s-form:form>

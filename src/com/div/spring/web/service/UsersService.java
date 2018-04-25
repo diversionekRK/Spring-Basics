@@ -1,11 +1,8 @@
 package com.div.spring.web.service;
 
-import com.div.spring.web.dao.Offer;
-import com.div.spring.web.dao.OffersDAO;
 import com.div.spring.web.dao.User;
-import com.div.spring.web.dao.UsersDAO;
+import com.div.spring.web.dao.UsersDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +15,10 @@ import java.util.List;
 @Service("usersService")
 public class UsersService {
 
-    private UsersDAO usersDao;
+    private UsersDao usersDao;
 
     @Autowired
-    public void setOffersDAO(UsersDAO usersDao) {
+    public void setOffersDAO(UsersDao usersDao) {
         this.usersDao = usersDao;
     }
 

@@ -1,8 +1,7 @@
 package com.div.spring.web.test.tests;
 
-import com.div.spring.web.dao.Offer;
 import com.div.spring.web.dao.User;
-import com.div.spring.web.dao.UsersDAO;
+import com.div.spring.web.dao.UsersDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +31,7 @@ import static org.junit.Assert.assertTrue;
 public class UserDaoTests {
 
     @Autowired
-    private UsersDAO usersDAO;
+    private UsersDao usersDao;
 
     @Autowired
     private DataSource dataSource;
@@ -48,12 +47,12 @@ public class UserDaoTests {
     @Test
     public void testCreateUser() {
         User user = new User("testuser", "testuser", "testuserName", "testuser@test.com", true, "ROLE_USER");
-        assertTrue("User creation should return true", usersDAO.create(user));
+        assertTrue("User creation should return true", usersDao.create(user));
 
-        List<User> users = usersDAO.getAllUsers();
+        List<User> users = usersDao.getAllUsers();
         assertEquals("Number of users should be 1", 1, users.size());
 
-        assertTrue("User should exist", usersDAO.exists(user.getUsername()));
+        assertTrue("User should exist", usersDao.exists(user.getUsername()));
 
         assertEquals("Created user should be equal to retrieved user", user, users.get(0));
     }

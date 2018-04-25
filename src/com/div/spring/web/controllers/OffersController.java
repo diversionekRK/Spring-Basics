@@ -46,9 +46,20 @@ public class OffersController {
     }
 
     @RequestMapping("/createoffer")
-    public String createOffer(Model model) {
+    public String createOffer(Model model, Principal principal) {
 
-        model.addAttribute("offer", new Offer());
+        Offer offer = null;
+
+        if(principal.getName() != null) {
+            String username = principal.getName();
+
+            offer = offersService.getOffer(username);
+        }
+
+        if(offer == null)
+            offer = new Offer();
+
+        model.addAttribute("offer", offer);
 
         return "createoffer";
     }
@@ -64,7 +75,7 @@ public class OffersController {
 
         offer.getUser().setUsername(username);
 
-        offersService.create(offer);
+        offersService.saveOrUpdate(offer);
 
         return "offercreated";
     }

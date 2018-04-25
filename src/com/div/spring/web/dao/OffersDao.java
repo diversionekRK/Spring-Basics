@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @Component
-public class OffersDAO {
+public class OffersDao {
     private NamedParameterJdbcTemplate jdbc;
 
     @Autowired
@@ -50,24 +50,14 @@ public class OffersDAO {
     }
 
     public List<Offer> getOffers() {
-        return jdbc.query("select * from offers natural join users where users.enabled = true", new RowMapper<Offer>() {
-            public Offer mapRow(ResultSet resultSet, int i) throws SQLException {
+        return jdbc.query("select * from offers natural join users where users.enabled = true", new OfferRowMapper());
+    }
 
-                User user = new User();
-                user.setAuthority(resultSet.getString("authority"));
-                user.setEmail(resultSet.getString("email"));
-                user.setEnabled(true);
-                user.setName(resultSet.getString("name"));
-                user.setUsername(resultSet.getString("username"));
-
-                Offer offer = new Offer();
-                offer.setId(resultSet.getInt("id"));
-                offer.setText(resultSet.getString("text"));
-                offer.setUser(user);
-
-                return offer;
-            }
-        });
+    public List<Offer> getOffers(String username) {
+        return jdbc.query(
+                "select * from offers natural join users where users.enabled = true and users.username = :username",
+                new MapSqlParameterSource("username", username)
+                , new OfferRowMapper());
     }
 
     private class OfferRowMapper implements RowMapper<Offer> {
@@ -93,23 +83,6 @@ public class OffersDAO {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
 
-        return jdbc.queryForObject("select * from offers natural join users where users.enabled = true and id = :id", params, new RowMapper<Offer>() {
-            public Offer mapRow(ResultSet resultSet, int i) throws SQLException {
-
-                User user = new User();
-                user.setAuthority(resultSet.getString("authority"));
-                user.setEmail(resultSet.getString("email"));
-                user.setEnabled(true);
-                user.setName(resultSet.getString("name"));
-                user.setUsername(resultSet.getString("username"));
-
-                Offer offer = new Offer();
-                offer.setId(resultSet.getInt("id"));
-                offer.setText(resultSet.getString("text"));
-                offer.setUser(user);
-
-                return offer;
-            }
-        });
+        return jdbc.queryForObject("select * from offers natural join users where users.enabled = true and id = :id", params, new OfferRowMapper());
     }
 }

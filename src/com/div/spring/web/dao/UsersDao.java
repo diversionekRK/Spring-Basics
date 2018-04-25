@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 @Component
-public class UsersDAO {
+public class UsersDao {
     private NamedParameterJdbcTemplate jdbc;
 
     @Autowired
