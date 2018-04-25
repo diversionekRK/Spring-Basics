@@ -25,7 +25,8 @@ public class User {
     @ValidEmail
     private String email;
 
-    @Size(min = 5, max = 100, message = "Name must be between 5 and 100 characters")
+    @NotBlank
+    @Size(min = 5, max = 60, message = "Name must be between 5 and 100 characters")
     private String name;
 
     private boolean enabled = false;

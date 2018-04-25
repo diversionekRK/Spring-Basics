@@ -70,6 +70,14 @@
             </td>
         </tr>
         <tr>
+            <td class="label">Name:</td>
+            <td>
+                <s-form:input class="control" path="name" name="name" type="text"/>
+                <br/>
+                <div class="error"><s-form:errors path="name"></s-form:errors></div>
+            </td>
+        </tr>
+        <tr>
             <td class="label">Email:</td>
             <td><s-form:input class="control" path="email" name="email" type="text"/>
                 <br/>
