@@ -25,18 +25,30 @@ public class User {
     @ValidEmail
     private String email;
 
+    @Size(min = 5, max = 100, message = "Name must be between 5 and 100 characters")
+    private String name;
+
     private boolean enabled = false;
     private String authority;
 
     public User() {
     }
 
-    public User(String username, String password, String email, boolean enabled, String authority) {
+    public User(String username, String password, String name, String email, boolean enabled, String authority) {
         this.username = username;
         this.password = password;
+        this.name = name;
         this.email = email;
         this.enabled = enabled;
         this.authority = authority;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -89,6 +101,7 @@ public class User {
         if (enabled != user.enabled) return false;
         if (!username.equals(user.username)) return false;
         if (!email.equals(user.email)) return false;
+        if (!name.equals(user.name)) return false;
         return authority.equals(user.authority);
     }
 
@@ -96,8 +109,20 @@ public class User {
     public int hashCode() {
         int result = username.hashCode();
         result = 31 * result + email.hashCode();
+        result = 31 * result + name.hashCode();
         result = 31 * result + (enabled ? 1 : 0);
         result = 31 * result + authority.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", enabled=" + enabled +
+                ", authority='" + authority + '\'' +
+                '}';
     }
 }

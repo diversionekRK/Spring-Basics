@@ -2,6 +2,8 @@ package com.div.spring.web.test.tests;
 
 import com.div.spring.web.dao.Offer;
 import com.div.spring.web.dao.OffersDAO;
+import com.div.spring.web.dao.User;
+import com.div.spring.web.dao.UsersDAO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,19 +39,24 @@ public class OfferDaoTests {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private UsersDAO usersDAO;
+
     @Before
     public void init() {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 
         jdbc.execute("delete from offers");
         jdbc.execute("delete from users");
-        jdbc.execute("delete from authorities");
     }
 
     @Test
     public void testOffers() {
 
-        Offer offer = new Offer("SomeTestName", "someemail@test.eu", "This is test offer to check if app works");
+        User user = new User("testuser", "testuser", "testuserName", "testuser@test.com", true, "ROLE_USER");
+        assertTrue("User creation should return true", usersDAO.create(user));
+
+        Offer offer = new Offer(user, "This is test offer to check if app works");
 
         assertTrue("Offer creation should return true", offersDAO.create(offer));
 

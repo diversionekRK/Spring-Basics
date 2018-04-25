@@ -13,30 +13,22 @@ import javax.validation.constraints.Size;
 public class Offer {
     private int id;
 
-    @Size(min = 5, max = 100, message = "Name must be between 5 and 100 characters")
-    private String name;
-
-    @NotNull
-    //@Pattern(regexp = ".*\\@.*\\..*", message = "This does not appear to be a valid email address.")
-    @ValidEmail(min = 7, message = "This email address is not valid.")
-    private String email;
-
     @Size(min = 20, max = 255, message = "Text must be between 20 and 255 characters")
     private String text;
+
+    private User user;
 
     public Offer() {
     }
 
-    public Offer(int id, String name, String email, String text) {
+    public Offer(int id, User user, String text) {
         this.id = id;
-        this.name = name;
-        this.email = email;
+        this.user = user;
         this.text = text;
     }
 
-    public Offer(String name, String email, String text) {
-        this.name = name;
-        this.email = email;
+    public Offer(User user, String text) {
+        this.user = user;
         this.text = text;
     }
 
@@ -44,10 +36,13 @@ public class Offer {
     public String toString() {
         return "Offer{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
                 ", text='" + text + '\'' +
+                ", user=" + user +
                 '}';
+    }
+
+    public String getUsername() {
+        return user.getUsername();
     }
 
     public int getId() {
@@ -58,28 +53,20 @@ public class Offer {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -89,16 +76,14 @@ public class Offer {
 
         Offer offer = (Offer) o;
 
-        if (!name.equals(offer.name)) return false;
-        if (!email.equals(offer.email)) return false;
-        return text.equals(offer.text);
+        if (!text.equals(offer.text)) return false;
+        return user.equals(offer.user);
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + text.hashCode();
+        int result = text.hashCode();
+        result = 31 * result + user.hashCode();
         return result;
     }
 }
