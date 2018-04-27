@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -68,15 +69,12 @@ public class UsersDaoTests {
     }
 
     @Test
-    public void testCreateUser() {
-        User user = new User("testuser", "testuser", "testuserName", "testuser@test.com", true, "ROLE_USER");
-        usersDao.create(user);
+    public void testExists() {
+        usersDao.create(user1);
+        usersDao.create(user2);
+        usersDao.create(user3);
 
-        List<User> users = usersDao.getAllUsers();
-        assertEquals("Number of users should be 1", 1, users.size());
-
-        assertTrue("User should exist", usersDao.exists(user.getUsername()));
-
-        assertEquals("Created user should be equal to retrieved user", user, users.get(0));
+        assertTrue("User should exist", usersDao.exists(user2.getUsername()));
+        assertFalse("User should not exist", usersDao.exists("randomTextXYZ"));
     }
 }
