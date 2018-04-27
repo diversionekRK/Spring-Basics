@@ -27,7 +27,7 @@ public class OffersService {
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     public void create(Offer offer) {
-        offersDao.create(offer);
+        offersDao.saveOrUpdate(offer);
     }
 
     public void throwTestException() {
@@ -47,25 +47,22 @@ public class OffersService {
     }
 
     public Offer getOffer(String username) {
-        if(username == null)
+        if (username == null)
             return null;
 
         List<Offer> offers = offersDao.getOffers(username);
 
-        if(offers.size() == 0)
+        if (offers.size() == 0)
             return null;
 
         return offers.get(0);
     }
 
     public void saveOrUpdate(Offer offer) {
-        if(offer.getId() != 0)
-            offersDao.update(offer);
-        else
-            offersDao.create(offer);
+        offersDao.saveOrUpdate(offer);
     }
 
-    public boolean delete(int id) {
+    public int delete(int id) {
         return offersDao.delete(id);
     }
 }
