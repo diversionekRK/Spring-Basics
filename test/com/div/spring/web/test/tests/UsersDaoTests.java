@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
         "classpath:com/div/spring/web/config/security-config.xml",
         "classpath:com/div/spring/web/test/config/datasource.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserDaoTests {
+public class UsersDaoTests {
 
     @Autowired
     private UsersDao usersDao;

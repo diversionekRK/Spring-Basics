@@ -18,8 +18,27 @@ public class Offer {
 
     private User user;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Offer offer = (Offer) o;
+
+        if (text != null ? !text.equals(offer.text) : offer.text != null) return false;
+        return user != null ? user.equals(offer.user) : offer.user == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = text != null ? text.hashCode() : 0;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        return result;
+    }
+
     public Offer() {
         this.user = new User();
+
     }
 
     public Offer(int id, User user, String text) {
@@ -70,21 +89,4 @@ public class Offer {
         this.user = user;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Offer offer = (Offer) o;
-
-        if (!text.equals(offer.text)) return false;
-        return user.equals(offer.user);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = text.hashCode();
-        result = 31 * result + user.hashCode();
-        return result;
-    }
 }

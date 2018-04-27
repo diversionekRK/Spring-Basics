@@ -3,6 +3,7 @@ package com.div.spring.web.dao;
 import com.div.spring.web.validation.ValidEmail;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import sun.misc.FormattedFloatingDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,23 +20,24 @@ import javax.validation.constraints.Size;
 @Table(name = "users")
 public class User {
 
-    @NotBlank
-    @Size(min = 8, max = 25)
-    @Pattern(regexp = "^\\w{8,}$")
+    @NotBlank(groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
+    @Size(min = 8, max = 25, groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
+    @Pattern(regexp = "^\\w{8,}$", groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
     @Id
     @Column(name = "username")
     private String username;
 
-    @NotBlank
-    @Pattern(regexp = "^\\S+$")
-    @Size(min = 8, max = 15)
+    @NotBlank(groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
+    @Pattern(regexp = "^\\S+$", groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
+    @Size(min = 8, max = 15, groups = {FormValidationGroup.class})
     private String password;
 
-    @ValidEmail
+    @ValidEmail(groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
     private String email;
 
-    @NotBlank
-    @Size(min = 5, max = 60, message = "Name must be between 5 and 100 characters")
+    @NotBlank(groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
+    @Size(min = 5, max = 60, message = "Name must be between 5 and 100 characters",
+            groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
     private String name;
 
     private boolean enabled = false;
@@ -117,11 +119,11 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = username.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + name.hashCode();
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (enabled ? 1 : 0);
-        result = 31 * result + authority.hashCode();
+        result = 31 * result + (authority != null ? authority.hashCode() : 0);
         return result;
     }
 
