@@ -42,12 +42,52 @@ public class OfferDaoTests {
     @Autowired
     private UsersDao usersDao;
 
+    private User user1 = new User("testuser1", "testuser", "testuser1",
+            "testuser@test.com", true, "ROLE_USER");
+    private User user2 = new User("testuser2", "testuser", "testuser1",
+            "testuser@test.com", true, "ROLE_USER");
+    private User user3 = new User("testuser3", "testuser", "testuser1",
+            "testuser@test.com", true, "ROLE_USER");
+    private User user4 = new User("testuser4", "testuser", "testuser1",
+            "testuser@test.com", false, "ROLE_USER");
+
+    private Offer offer1 = new Offer(user1, "This is a test offer...");
+    private Offer offer2 = new Offer(user2, "This is a test offer...");
+    private Offer offer3 = new Offer(user2, "This is a test offer...");
+    private Offer offer4 = new Offer(user3, "This is a test offer...");
+    private Offer offer5 = new Offer(user3, "This is a test offer...");
+    private Offer offer6 = new Offer(user3, "This is a test offer...");
+    private Offer offer7 = new Offer(user4, "This is a test offer...");
+
     @Before
     public void init() {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 
         jdbc.execute("delete from offers");
         jdbc.execute("delete from users");
+    }
+
+    @Test
+    public void testCreate() {
+        usersDao.create(user1);
+        usersDao.create(user2);
+        usersDao.create(user3);
+        usersDao.create(user4);
+
+        offersDao.create(offer1);
+        List<Offer> offers1 = offersDao.getOffers();
+        assertEquals("Should be one offer", 1, offers1.size());
+        assertEquals("Retrieved offer should be equal to inserted offer", offer1, offers1.get(0));
+
+        offersDao.create(offer2);
+        offersDao.create(offer3);
+        offersDao.create(offer4);
+        offersDao.create(offer5);
+        offersDao.create(offer6);
+        offersDao.create(offer7);
+
+        List<Offer> offers2 = offersDao.getOffers();
+        assertEquals("Should be six offers for enabled users", 6, offers2.size());
     }
 
     @Test
@@ -59,7 +99,7 @@ public class OfferDaoTests {
 
         //Offer creation test
         Offer offer = new Offer(user, "This is test offer to check if app works");
-        assertTrue("Offer creation should return true", offersDao.create(offer));
+        offersDao.create(offer);
 
         //Getting list of offers test
         List<Offer> offers = offersDao.getOffers();
@@ -77,7 +117,7 @@ public class OfferDaoTests {
 
         //Offer creation test
         Offer offer2 = new Offer(user, "This is another test offer");
-        assertTrue("Offer creation should return true", offersDao.create(offer2));
+        offersDao.create(offer2);
 
         //Getting list of offers test
         List<Offer> userOffers = offersDao.getOffers(user.getUsername());

@@ -1,5 +1,7 @@
 package com.div.spring.web.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
@@ -17,19 +19,25 @@ import java.util.List;
  */
 
 @Repository
+@Transactional
 @Component
 public class OffersDao {
     private NamedParameterJdbcTemplate jdbc;
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Autowired
     public void setDataSource(DataSource jdbc) {
         this.jdbc = new NamedParameterJdbcTemplate(jdbc);
     }
 
-    public boolean create(Offer offer) {
-        BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(offer);
+    public Session session() {
+        return sessionFactory.getCurrentSession();
+    }
 
-        return jdbc.update("insert into offers (username, text) values (:username, :text)", params) == 1;
+    public void create(Offer offer) {
+        session().save(offer);
     }
 
     @Transactional

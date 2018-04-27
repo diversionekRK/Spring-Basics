@@ -2,6 +2,7 @@ package com.div.spring.web.dao;
 
 import com.div.spring.web.validation.ValidEmail;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -10,12 +11,21 @@ import javax.validation.constraints.Size;
  * Created by Div on 2018-02-13.
  */
 
+@Entity
+@Table(name = "offers")
 public class Offer {
+
+    @Id
+    @GeneratedValue
     private int id;
 
-    @Size(min = 20, max = 255, message = "Text must be between 20 and 255 characters")
+    @Size(min = 20, max = 255, message = "Text must be between 20 and 255 characters",
+            groups = {PersistanceValidationGroup.class, FormValidationGroup.class})
+    @Column(name = "text")
     private String text;
 
+    @ManyToOne
+    @JoinColumn(name = "username")
     private User user;
 
     @Override
