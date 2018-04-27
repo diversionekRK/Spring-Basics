@@ -1,7 +1,9 @@
 package com.div.spring.web.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
@@ -60,7 +62,11 @@ public class OffersDao {
     }
 
     public List<Offer> getOffers() {
-        return jdbc.query("select * from offers natural join users where users.enabled = true", new OfferRowMapper());
+        Criteria criteria = session().createCriteria(Offer.class);
+        criteria.createAlias("user", "u");
+        criteria.add(Restrictions.eq("u.enabled", true));
+
+        return criteria.list();
     }
 
     public List<Offer> getOffers(String username) {

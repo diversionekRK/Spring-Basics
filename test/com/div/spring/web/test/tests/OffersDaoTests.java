@@ -31,7 +31,7 @@ import static org.junit.Assert.assertTrue;
         "classpath:com/div/spring/web/test/config/datasource.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class OfferDaoTests {
+public class OffersDaoTests {
 
     @Autowired
     private OffersDao offersDao;
@@ -68,7 +68,7 @@ public class OfferDaoTests {
     }
 
     @Test
-    public void testCreate() {
+    public void testCreateRetrieve() {
         usersDao.create(user1);
         usersDao.create(user2);
         usersDao.create(user3);
@@ -92,35 +92,29 @@ public class OfferDaoTests {
 
     @Test
     public void testOffers() {
-
-        //User creation test
-        User user = new User("testuser", "testuser", "testuserName", "testuser@test.com", true, "ROLE_USER");
-        usersDao.create(user);
-
-        //Offer creation test
-        Offer offer = new Offer(user, "This is test offer to check if app works");
-        offersDao.create(offer);
+        usersDao.create(user1);
+        offersDao.create(offer1);
 
         //Getting list of offers test
         List<Offer> offers = offersDao.getOffers();
         assertEquals("There should be one offer in a database", 1, offers.size());
-        assertEquals("Created offer should be equal to retrieved offer", offer, offers.get(0));
+        assertEquals("Created offer should be equal to retrieved offer", offer1, offers.get(0));
 
         //Updating offer test
-        offer = offers.get(0);
-        offer.setText("Updated in test offer text");
-        assertTrue("Updated offer should return true", offersDao.update(offer));
+        offer1 = offers.get(0);
+        offer1.setText("Updated in test offer text");
+        assertTrue("Updated offer should return true", offersDao.update(offer1));
 
         //Querying offer by ID test
-        Offer updated = offersDao.getOffer(offer.getId());
-        assertEquals("Updated offer should match retrieved updated offer", offer, updated);
+        Offer updated = offersDao.getOffer(offer1.getId());
+        assertEquals("Updated offer should match retrieved updated offer", offer1, updated);
 
         //Offer creation test
-        Offer offer2 = new Offer(user, "This is another test offer");
+        Offer offer2 = new Offer(user1, "This is another test offer");
         offersDao.create(offer2);
 
         //Getting list of offers test
-        List<Offer> userOffers = offersDao.getOffers(user.getUsername());
+        List<Offer> userOffers = offersDao.getOffers(user1.getUsername());
         assertEquals("Should contain two offers for user", 2, userOffers.size());
 
         //Getting offers by ID test
@@ -131,7 +125,7 @@ public class OfferDaoTests {
         }
 
         //Offer deletion test
-        assertTrue("Offer deletion should return true", offersDao.delete(offer.getId()));
+        assertTrue("Offer deletion should return true", offersDao.delete(offer1.getId()));
 
         List<Offer> finalList = offersDao.getOffers();
         assertEquals("Offers list should contain one offer",1, finalList.size());
