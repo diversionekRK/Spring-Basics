@@ -55,7 +55,7 @@ public class OfferDaoTests {
 
         //User creation test
         User user = new User("testuser", "testuser", "testuserName", "testuser@test.com", true, "ROLE_USER");
-        assertTrue("User creation should return true", usersDao.create(user));
+        usersDao.create(user);
 
         //Offer creation test
         Offer offer = new Offer(user, "This is test offer to check if app works");

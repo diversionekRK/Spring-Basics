@@ -1,5 +1,7 @@
 package com.div.spring.web.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 
 @Component
+@Transactional
 public class UsersDao {
     private NamedParameterJdbcTemplate jdbc;
 
@@ -25,25 +28,20 @@ public class UsersDao {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    private SessionFactory sessionFactory;
+
+    @Autowired
     public void setDataSource(DataSource jdbc) {
         this.jdbc = new NamedParameterJdbcTemplate(jdbc);
     }
 
+    public Session session() {
+        return sessionFactory.getCurrentSession();
+    }
+
     @Transactional
-    public boolean create(User user) {
-        MapSqlParameterSource params = new MapSqlParameterSource();
-
-        params.addValue("username", user.getUsername());
-        params.addValue("password", passwordEncoder.encode(user.getPassword()));
-        params.addValue("email", user.getEmail());
-        params.addValue("name", user.getName());
-        params.addValue("enabled", user.isEnabled());
-        params.addValue("authority", user.getAuthority());
-
-        return jdbc.update(
-                "insert into users (username, password, email, name, enabled, authority) " +
-                        "values (:username, :password, :email, :name, :enabled, :authority)", params
-        ) == 1;
+    public void create(User user) {
+        session().save(user);
     }
 
     public boolean exists(String username) {
@@ -52,7 +50,8 @@ public class UsersDao {
         return jdbc.queryForObject("select count(*) from users where username = :username", param, Integer.class) > 0;
     }
 
+    @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
-        return jdbc.query("select * from users", new BeanPropertyRowMapper(User.class));
+        return session().createQuery("from User").list();
     }
 }
